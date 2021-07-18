@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!--namespace声明对象的映射路径也就是IStudentMapper关联Studentmapper.xml  -->
+<mapper namespace="com.mapper.IStudentMapper">
+<insert id="save" parameterType="com.bean.Student">
+ insert into student(sname,sex,address,birthday,fname,classid) values(#{sname},#{sex},#{address},#{birthday},#{fname},#{classid}) 
+ </insert>
+ <update id="update" parameterType="com.bean.Student">
+ update student set sname=#{sname},sex=#{sex},address=#{address},birthday=#{birthday},fname=#{fname},classid=#{classid} where sid=#{sid}
+ </update>
+ 
+ <delete id="delById" parameterType="java.lang.Integer">
+ delete from student where sid=#{sid}
+ </delete>
+ <select id="findById" parameterType="java.lang.Integer" resultType="com.bean.Student">
+   select * from student where sid=#{sid}
+ </select>
+ 
+<select id="findPageAll" parameterType="java.lang.Integer" resultType="com.bean.Student">
+SELECT s.*,c.cname FROM student s,clazz c WHERE s.classid=c.cid  LIMIT #{page},#{rows};
+</select>
+ 
+ <select id="findMaxPage" resultType="int">
+ select count(*) from student
+ </select>
+ <select id="doinit" resultType="com.bean.Clazz">
+ select * from clazz
+ </select>
+</mapper>
